@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			body,h1,h2,h3,h4,h5,h6,dl,dt,dd,p,ul,li{margin:0;padding:0;}
+			body{font-size:12px;font-family:"微软雅黑";}
+			ol,ul,li{list-style:none;}
+			a{text-decoration:none; color:black;display: block;}
+			span,p{display: block;}
+			img{border:0;display: block;}
+			input select{padding:0;border:0;margin:0;}
+			.clear:after{content:".";clear:both;display:block;height:0;overflow:hidden;visibility:hidden;}
+
+			.box{
+				width: 712px;
+				height: 588px;
+				position: relative;
+				margin: 0 auto;
+			}
+			.bg{
+				width: 712px;
+				height: 588px;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			.box span{
+				height: 25px;
+				font: 25px/25px "微软雅黑";
+				color: #fff;
+				position: absolute;
+				left: 14px;
+				top: 6px;
+			}
+			#con{
+				width: 680px;
+				height: 458px;
+				position: absolute;
+				box-shadow: 1px 1px 3px #fff ;
+				top: 40px;
+				left: 14px;
+			}
+			#prev{
+				width: 50px;
+				height: 50px;
+				border: 1px solid transparent;
+				border-radius: 25px;
+				background: orange;
+				opacity: 0.5;
+				font: 25px/50px "微软雅黑";
+				text-align: center;
+				color: #fff;
+				font-weight: bolder;
+				position: absolute;
+				left: 43px;
+				top: 242px;
+			}
+			#next{
+				width: 50px;
+				height: 50px;
+				border: 1px solid transparent;
+				border-radius: 25px;
+				background: orange;
+				opacity: 0.5;
+				font: 25px/50px "微软雅黑";
+				text-align: center;
+				color: #fff;
+				font-weight: bolder;
+				position: absolute;
+				right: 46px;
+				top: 242px;
+			}
+			#dady{
+				width: 125px;
+				height: 15px;
+				position: absolute;
+				left: 279px;
+				bottom: 36px;
+			}
+			#dady div{
+				width: 13px;
+				height: 13px;
+				background: #94a59c;
+				border: 1px solid #94a59c;
+				border-radius: 13px;
+				margin-right: 10px;
+				float: left;
+				position: relative;
+			}
+			#dady #ori{
+				background: #FFA500;
+			}
+			.litimg{
+				width: 90px;
+				height: 60px;
+				border: 2px solid #000000;
+				position: absolute;
+				left: -40px;
+				top: -70px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<img class="bg" src="img/imgs/0.png" />
+			<span>带略缩图的图片轮换</span>
+			<img id="con" src="" />
+			<div id="prev"><</div>
+			<div id="next">></div>
+			<div id="dady">
+				<div id="ori"></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+		</div>
+	</body>
+	<script>
+		var pre = document.getElementById('prev');
+		var nex = document.getElementById('next');
+		var con = document.getElementById('con');
+		var arrcon = ['img/imgs/0.png','img/imgs/1.png','img/imgs/2.png','img/imgs/3.png','img/imgs/4.png'];
+		var dady = document.getElementById('dady');
+		var oBtn = dady.getElementsByTagName('div');
+		var num = 0;
+		function pic (){
+			con.src = arrcon[num];
+		}
+		pic();
+		pre.onclick = function(){
+			num--;
+			if(num==-1){
+				num = arrcon.length-1;
+			}
+			for(var i=0;i<arrcon.length;i++){
+				oBtn[i].id = '';
+			}
+			oBtn[num].id = 'ori';
+			pic();
+		}
+		nex.onclick = function(){
+			num++;
+			if(num==arrcon.length){
+				num = 0;
+			}
+			for(var i=0;i<arrcon.length;i++){
+				oBtn[i].id = '';
+			}
+			oBtn[num].id = 'ori';
+			pic();
+		}
+		pre.onmouseover = function(){
+			pre.style.opacity = '1';
+		}
+		pre.onmouseleave = function(){
+			pre.style.opacity = '';
+		}
+		nex.onmouseover = function(){
+			nex.style.opacity = '1';
+		}
+		nex.onmouseleave = function(){
+			nex.style.opacity = '';
+		}
+		for(var i=0;i<arrcon.length;i++){
+			oBtn[i].index = i;
+			oBtn[i].onclick = function(){
+				for(var i=0;i<arrcon.length;i++){
+				oBtn[i].id = '';
+				}
+				con.src = arrcon[this.index];
+				this.id = 'ori';
+				prev2 = this;
+				num = this.index;
+			}
+			oBtn[i].onmouseover = function(){
+				this.innerHTML = '<img class="litimg" src="'+arrcon[this.index]+'" />';
+			}
+			oBtn[i].onmouseleave = function(){
+				this.innerHTML = '';
+			}
+		}
+	</script>
+</html>
